@@ -1,0 +1,64 @@
+cmd - return : wezterm
+cmd + shift - return : firefox
+
+cmd - a : yabai -m window --focus stack.next
+cmd - z : yabai -m window --focus stack.prev
+cmd - h : yabai -m window --focus west
+cmd - l : yabai -m window --focus east
+cmd - k : yabai -m window --focus north
+cmd - j : yabai -m window --focus south
+
+cmd - t : yabai -m window --toggle pip
+cmd - i : yabai -m window --toggle zoom-fullscreen
+cmd - p : yabai -m window --toggle zoom-parent
+cmd - s : yabai -m window --toggle split
+cmd - e : yabai -m window --toggle float && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
+
+# switch focus when focus is lost
+cmd - o : [ $(yabai -m query --windows --space | jq -re "map(select(.\"has-focus\" == true)) | length != 0") = true ] \
+		  && yabai -m window --focus "$(yabai -m query --windows --space | jq -re "[sort_by(.id, .frame) | reverse | .[] | select(.role == \"AXWindow\" and .subrole == \"AXStandardWindow\") | .id] | nth(index($(yabai -m query --windows --window | jq -re ".id")) - 1)")" \
+		  || yabai -m window --focus "$(yabai -m query --spaces --space | jq -re ".windows[0]?")" \
+		  &> /dev/null
+
+cmd - b : yabai -m space --balance
+cmd - r : yabai -m space --rotate 90
+cmd - y : yabai -m space --mirror y-axis
+cmd - u : yabai -m space --mirror x-axis
+
+# '['
+cmd - 0x21 : yabai -m space --focus prev
+# ']'
+cmd - 0x1E : yabai -m space --focus next
+
+# '''
+cmd - 0x27 : yabai -m window --toggle sticky
+# ';'
+cmd - 0x29 : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
+
+ctrl + cmd - h : yabai -m window --resize left:-20:0
+ctrl + cmd - j : yabai -m window --resize bottom:0:20
+ctrl + cmd - k : yabai -m window --resize top:0:-20
+ctrl + cmd - l : yabai -m window --resize right:20:0
+
+alt + cmd - h : yabai -m window --resize right:-20:0
+alt + cmd - j : yabai -m window --resize top:0:20
+alt + cmd - k : yabai -m window --resize bottom:0:-20
+alt + cmd - l : yabai -m window --resize left:20:0
+
+shift + cmd - h : yabai -m window --move rel:-20:0 || yabai -m window --swap west
+shift + cmd - j : yabai -m window --move rel:0:20 || yabai -m window --swap south
+shift + cmd - k : yabai -m window --move rel:0:-20 || yabai -m window --swap north
+shift + cmd - l : yabai -m window --move rel:20:0 || yabai -m window --swap east
+
+ctrl + cmd - n : yabai -m space --create
+ctrl + cmd - w : yabai -m space --focus prev && yabai -m space recent --destroy
+
+ctrl + cmd - 0x21 : yabai -m display --focus prev
+ctrl + cmd - 0x1E : yabai -m display --focus next
+
+shift + cmd - 0x21 : yabai -m window --display prev && yabai -m display --focus recent
+shift + cmd - 0x1E : yabai -m window --display next && yabai -m display --focus recent
+
+ctrl + cmd - f : yabai -m window --toggle native-fullscreen
+ctrl + cmd - 0x21 : yabai -m window --space prev && yabai -m space --focus recent
+ctrl + cmd - 0x1E : yabai -m window --space next && yabai -m space --focus recent

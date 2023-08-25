@@ -1,0 +1,24 @@
+theme = "rose_pine_dawn"
+
+[editor]
+color-modes = true
+completion-trigger-len = 1
+cursorline = true
+line-number = "relative"
+true-color = true
+undercurl = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.lsp]
+display-inlay-hints = true
+display-messages = true
+
+[keys.normal]
+X = "extend_line_above"
+
+[keys.select]
+X = "extend_line_above"

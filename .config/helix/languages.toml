@@ -1,0 +1,51 @@
+[[language]]
+name = "rust"
+
+[language.config]
+checkOnSave = { command = "clippy" }
+
+[language.config.check]
+command = "clippy"
+
+[language.language-server]
+command = "rustup"
+args = ["run", "stable", "rust-analyzer"]
+
+[[language]]
+name = "java"
+auto-format = true
+formatter = { command = "google-java-format", args = ["-"] }
+indent = { tab-width = 2, unit = "  " }
+
+[language.language-server]
+command = "jdtls"
+args = ["--jvm-arg=-javaagent:/Users/jvt/.m2/repository/org/projectlombok/lombok/1.18.26/lombok-1.18.26.jar"]
+
+[[language]]
+name = "elixir"
+auto-format = true
+scope = "source.elixir"
+injection-regex = "(elixir|ex)"
+file-types = ["ex", "exs", "mix.lock"]
+shebangs = ["elixir"]
+roots = ["mix.exs", "mix.lock"]
+comment-token = "#"
+indent = { tab-width = 2, unit = "  " }
+
+[language.config]
+elixirLS.dialyzerEnabled = true
+
+[[language]]
+name = "unison"
+scope = "source.unison"
+injection-regex = "unison"
+file-types = ["u"]
+shebangs = []
+roots = []
+auto-format = false
+comment-token = "--"
+indent = { tab-width = 4, unit = "    " }
+
+[language.language-server]
+command = "nc"
+args = ["localhost", "5757"]
