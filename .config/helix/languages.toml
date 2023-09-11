@@ -36,16 +36,16 @@ indent = { tab-width = 2, unit = "  " }
 elixirLS.dialyzerEnabled = true
 
 [[language]]
-name = "unison"
-scope = "source.unison"
-injection-regex = "unison"
-file-types = ["u"]
-shebangs = []
-roots = []
-auto-format = false
-comment-token = "--"
-indent = { tab-width = 4, unit = "    " }
+name = "vue"
+scope = "source.vue"
+injection-regex = "vue"
+file-types = ["vue"]
+roots = ["package.json"]
+indent = { tab-width = 2, unit = "  " }
 
 [language.language-server]
-command = "nc"
-args = ["localhost", "5757"]
+command = "vue-language-server.js"
+args = ["--stdio"]
+
+[language.config]
+typescript = { tsdk = "node_modules/typescript/lib" }
